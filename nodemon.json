@@ -1,0 +1,8 @@
+{
+    "ext": ".ts,.js",
+    "ignore": [],
+    "watch": [
+        "src"
+    ],
+    "exec": "ts-node -r tsconfig-paths/register"
+}
