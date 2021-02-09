@@ -29,3 +29,5 @@
 - https://www.typescriptlang.org/tsconfig
 - http://expressjs.com/en/resources/middleware/morgan.html
 - https://github.com/winstonjs/winston
+- https://www.npmjs.com/package/bcryptjs
+- https://www.npmjs.com/package/class-validator
