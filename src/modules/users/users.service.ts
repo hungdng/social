@@ -1,11 +1,12 @@
-import { TokenData, DataStoreInToken } from './../auth/auth.interface';
+import { DataStoredInToken } from './../auth/auth.interface';
 import { HttpException } from '@core/exceptions';
-import { isEmptyObject } from './../../core/utils/helpers';
-import RegisterDto from './dtos/register.dto';
-import UserSchema from './users.model';
-import gravatar from 'gravatar';
-import bcryptjs from 'bcryptjs';
 import IUser from './users.interface';
+import RegisterDto from './dtos/register.dto';
+import { TokenData } from '@modules/auth';
+import UserSchema from './users.model';
+import bcryptjs from 'bcryptjs';
+import gravatar from 'gravatar';
+import { isEmptyObject } from '@core/utils';
 import jwt from 'jsonwebtoken';
 
 class UserService {
@@ -16,7 +17,7 @@ class UserService {
       throw new HttpException(400, 'Model is empty');
     }
 
-    const user = this.userSchema.findOne({ email: model.email });
+    const user = await this.userSchema.findOne({ email: model.email });
     if (user) {
       throw new HttpException(409, `Your email ${model.email} already exist.`);
     }
@@ -27,20 +28,20 @@ class UserService {
       default: 'mm',
     });
 
-    const salt = bcryptjs.genSaltSync(10);
+    const salt = await bcryptjs.genSalt(10);
 
-    const hashedPassword = bcryptjs.hashSync(model.password!, salt);
-    const createUser = await this.userSchema.create({
+    const hashedPassword = await bcryptjs.hash(model.password!, salt);
+    const createdUser = await this.userSchema.create({
       ...model,
       password: hashedPassword,
       avatar: avatar,
       date: Date.now(),
     });
-    return this.createToken(createUser);
+    return this.createToken(createdUser);
   }
 
   private createToken(user: IUser): TokenData {
-    const dataInToken: DataStoreInToken = { id: user._id };
+    const dataInToken: DataStoredInToken = { id: user._id };
     const secret: string = process.env.JWT_TOKEN_SECRET!;
     const expiresIn: number = 60;
     return {
@@ -48,5 +49,4 @@ class UserService {
     };
   }
 }
-
 export default UserService;

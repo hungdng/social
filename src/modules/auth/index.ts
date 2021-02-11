@@ -1,4 +1,4 @@
 import IUser from '@modules/users/users.interface';
-import { DataStoreInToken, TokenData } from './auth.interface';
+import { DataStoredInToken, TokenData } from './auth.interface';
 
-export { DataStoreInToken, TokenData, IUser };
+export { DataStoredInToken, TokenData, IUser };

@@ -5,7 +5,7 @@ import { isEmptyObject } from './../../core/utils/helpers';
 import { TokenData } from './auth.interface';
 import { IUser, UserSchema } from '@modules/users';
 import LoginDto from './auth.dto';
-import { DataStoreInToken } from './auth.interface';
+import { DataStoredInToken } from './auth.interface';
 
 class AuthService {
   public userSchema = UserSchema;
@@ -31,7 +31,7 @@ class AuthService {
   }
 
   private createToken(user: IUser): TokenData {
-    const dataInToken: DataStoreInToken = { id: user._id };
+    const dataInToken: DataStoredInToken = { id: user._id };
     const secret: string = process.env.JWT_TOKEN_SECRET!;
     const expiresIn: number = 60;
     return {

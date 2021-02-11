@@ -1,5 +1,5 @@
 import IUser from '@modules/users/users.interface';
 import UserSchema from './users.model';
-import UsersRoute from './users.route';
+import UsersRoute from '@modules/users/user.route';
 
-export { IUser, UserSchema, UsersRoute };
+export { UsersRoute, UserSchema, IUser };
