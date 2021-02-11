@@ -1,4 +1,5 @@
 import { Route } from '@core/interfaces';
+import { authMiddleware } from '@core/middleware';
 import { Router } from 'express';
 import AuthController from './auth.controller';
 export default class AuthRoute implements Route {
@@ -13,5 +14,10 @@ export default class AuthRoute implements Route {
 
   private initializerRoutes() {
     this.router.post(this.path, this.authController.login); //POST: http://localhost:5000/api/auth
+    this.router.get(
+      this.path,
+      authMiddleware,
+      this.authController.getCurrentLoginUser,
+    ); //GET: http://localhost:5000/api/auth --> Require login
   }
 }
